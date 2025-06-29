@@ -9,19 +9,19 @@ pipeline {
         }
         stage('Restore the project') {
             steps {
-                bat 'dotnet restore Horizons.sln'
+                bat 'dotnet restore'
             }
         }
 
         stage('Build the project up') {
             steps {
-                bat 'dotnet build Horizons.sln'
+                bat 'dotnet build'
             }
         }
 
         stage('Test the project') {
             steps {
-                bat 'dotnet test Horizons.sln --no-build --verbosity normal'
+                bat 'dotnet test --no-build --verbosity normal'
             }
         }
     }
