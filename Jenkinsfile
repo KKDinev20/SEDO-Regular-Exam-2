@@ -7,10 +7,10 @@ pipeline {
     }
 
     stages {
-        stage('Install .NET 6 SDK') {
+        stage('Install .NET SDK') {
             steps {
                 bat 'powershell -Command "Invoke-WebRequest https://dot.net/v1/dotnet-install.ps1 -OutFile dotnet-install.ps1"'
-                bat 'powershell -ExecutionPolicy Bypass -File .\\dotnet-install.ps1 -Version 8.0.21 -InstallDir %USERPROFILE%\\dotnet'
+                bat 'powershell -ExecutionPolicy Bypass -File .\\dotnet-install.ps1 -Version 8.0.301 -InstallDir C:\\Program Files\\dotnet'
             }
         }
 
