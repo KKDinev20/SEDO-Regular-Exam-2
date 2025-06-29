@@ -1,25 +1,32 @@
 pipeline {
     agent any
 
+    environment {
+        DOTNET_ROOT = "${env.USERPROFILE}\\dotnet"
+        PATH = "${env.USERPROFILE}\\dotnet;${env.PATH}"
+    }
+
     stages {
-        stage('Checkout') {
+        stage('Install .NET 6 SDK') {
             steps {
-                checkout scm 
+                bat 'powershell -Command "Invoke-WebRequest https://dot.net/v1/dotnet-install.ps1 -OutFile dotnet-install.ps1"'
+                bat 'powershell -ExecutionPolicy Bypass -File .\\dotnet-install.ps1 -Version 8.0.21 -InstallDir %USERPROFILE%\\dotnet'
             }
         }
-        stage('Restore the project') {
+
+        stage('Restore Dependencies') {
             steps {
                 bat 'dotnet restore'
             }
         }
 
-        stage('Build the project up') {
+        stage('Build') {
             steps {
-                bat 'dotnet build'
+                bat 'dotnet build --no-restore'
             }
         }
 
-        stage('Test the project') {
+        stage('Test') {
             steps {
                 bat 'dotnet test --no-build --verbosity normal'
             }
